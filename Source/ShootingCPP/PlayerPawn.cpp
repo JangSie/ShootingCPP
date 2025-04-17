@@ -58,10 +58,20 @@ void APlayerPawn::BeginPlay()
 	
 }
 
-// Called every frame
+// Called every frame = 1프레임마다 호출됨(사용시 주의 필요)
 void APlayerPawn::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	// 1프레임마다 플레이어가 나아갈 방향 
+	// float 3개가 들어갈 수 있는 형태 = x, y, z로 xyz 컴포넌트 값을 초기화
+	FVector Direction = FVector(0, Horizontal, Vertical);
+	Direction.Normalize(); // Direction에 들어온 값을 정규화 하는 함수
+	// 정규화 이유 : 대각선은 루트2(1.4---)의 값을 가짐 => 속도가 더 빨라지는 버그 -> 1로 정규화 필요
+
+	FVector NewLocation = GetActorLocation() + Direction * MoveSpeed * DeltaTime;
+
+	SetActorLocation(NewLocation);
 
 }
 
@@ -85,13 +95,13 @@ void APlayerPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 
 void APlayerPawn::OnInputHorizontal(const FInputActionValue& value)
 {
-	float Horizontal = value.Get<float>(); //<float> : float 형으로 값을 받겠다는 소리
-	UE_LOG(LogTemp, Warning, TEXT("Horizontal : %f"), Horizontal);
+	Horizontal = value.Get<float>(); //<float> : float 형으로 값을 받겠다는 소리
+	//UE_LOG(LogTemp, Warning, TEXT("Horizontal : %f"), Horizontal);
 }
 
 void APlayerPawn::OnInputVertical(const FInputActionValue& value)
 {
-	float Vertical = value.Get<float>(); //<float> : float 형으로 값을 받겠다는 소리
-	UE_LOG(LogTemp, Warning, TEXT("Vertical : %f"), Vertical);
+	Vertical = value.Get<float>(); //<float> : float 형으로 값을 받겠다는 소리
+	//UE_LOG(LogTemp, Warning, TEXT("Vertical : %f"), Vertical);
 }
 

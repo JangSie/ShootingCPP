@@ -49,6 +49,9 @@ public:
 	
 	// ------------------Inputs 연관 변수 선언------------------------
 	UPROPERTY(EditAnywhere)
+	float MoveSpeed = 500.0f; // 속력 변수
+
+	UPROPERTY(EditAnywhere)
 	class UInputMappingContext* IMC_PlayerInput;
 
 	UPROPERTY(EditAnywhere)
@@ -56,6 +59,12 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	class UInputAction* IA_Vertical;
+
+private:
+	float Horizontal = 0.0f; //초기화
+	float Vertical = 0.0f;
+	
+
 
 private:
 	// 입력 이벤트 발생 시 실행할 함수
