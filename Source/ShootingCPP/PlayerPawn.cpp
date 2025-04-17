@@ -4,8 +4,10 @@
 #include "PlayerPawn.h"
 #include "Components/BoxComponent.h"
 #include "Components/StaticMeshComponent.h"
+#include "Components/ArrowComponent.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "Bullet.h"
 
 // Sets default values
 APlayerPawn::APlayerPawn()
@@ -30,6 +32,8 @@ APlayerPawn::APlayerPawn()
 	// 컴포넌트를 계층 구조로 만들어줌
 	// = 자식컴포넌트->SetupAttachment(부모될 컴포넌트);
 
+	FirePosition = CreateDefaultSubobject<UArrowComponent>(TEXT("Fire Position"));
+	FirePosition->SetupAttachment(BoxComp);
 
 }
 
@@ -92,6 +96,7 @@ void APlayerPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 		EnhancedInputComp->BindAction(IA_Horizontal, ETriggerEvent::Completed, this, &APlayerPawn::OnInputHorizontal); //Completed : 뺄 때 (-)
 		EnhancedInputComp->BindAction(IA_Vertical, ETriggerEvent::Triggered, this, &APlayerPawn::OnInputVertical); //Triggered : 더할 때 (+)
 		EnhancedInputComp->BindAction(IA_Vertical, ETriggerEvent::Completed, this, &APlayerPawn::OnInputVertical); //Completed : 뺄 때 (-)
+		EnhancedInputComp->BindAction(IA_Fire, ETriggerEvent::Started, this, &APlayerPawn::Fire);
 	}
 
 }
@@ -106,5 +111,17 @@ void APlayerPawn::OnInputVertical(const FInputActionValue& value)
 {
 	Vertical = value.Get<float>(); //<float> : float 형으로 값을 받겠다는 소리
 	//UE_LOG(LogTemp, Warning, TEXT("Vertical : %f"), Vertical);
+}
+
+void APlayerPawn::Fire()
+{
+	// #include "Bullet.h"  해줌
+	ABullet* Bullet = GetWorld()->SpawnActor<ABullet>(BulletFactory, 
+		FirePosition->GetComponentLocation(), FirePosition->GetComponentRotation());
+
+	// SpawnActor<actor를 상속받은 것만 들어올 수 있음>
+	// FirePosition: 스폰될 포지션 
+	// - GetComponentLocation : fire의 (언리얼) 빨간색 위치를 가져옴
+	// - GetComponentRotation : 회전값(rotation) 가져옴 
 }
 

@@ -52,6 +52,14 @@ public:
 	float MoveSpeed = 500.0f; // 속력 변수
 
 	UPROPERTY(EditAnywhere)
+	class UArrowComponent* FirePosition;
+	// 방향이랑 위치 나타내는 컴포넌트
+
+	// TSubClassOf <> 안에 들어간 클래스와 그 클래스의 자식까지 여기에 할당 가능
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<class ABullet> BulletFactory; // 언리얼에서 드래그 앤 드롭으로 할당 가능?
+
+	UPROPERTY(EditAnywhere)
 	class UInputMappingContext* IMC_PlayerInput;
 
 	UPROPERTY(EditAnywhere)
@@ -59,6 +67,10 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	class UInputAction* IA_Vertical;
+
+	UPROPERTY(EditAnywhere)
+	class UInputAction* IA_Fire;
+
 
 private:
 	float Horizontal = 0.0f; //초기화
@@ -72,4 +84,6 @@ private:
 	// 이 함수는 언리얼에서 지정해둠, class(전방선언) 사용 불가(=형식 유지 필요) => include 필요(InputActionValue.h)
 	void OnInputVertical(const struct FInputActionValue& value);
 
+	// 총알 발사 입력 처리 함수
+	void Fire();
 };
