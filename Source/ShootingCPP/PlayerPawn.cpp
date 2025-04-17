@@ -64,14 +64,17 @@ void APlayerPawn::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	// 1프레임마다 플레이어가 나아갈 방향 
-	// float 3개가 들어갈 수 있는 형태 = x, y, z로 xyz 컴포넌트 값을 초기화
+	// float 3개가 들어갈 수 있는 형태 =언리얼 엔진 전용의 사용하는 3D공간 상에서 X, Y, Z 컴포넌트를 가진 벡터 구조체
 	FVector Direction = FVector(0, Horizontal, Vertical);
 	Direction.Normalize(); // Direction에 들어온 값을 정규화 하는 함수
 	// 정규화 이유 : 대각선은 루트2(1.4---)의 값을 가짐 => 속도가 더 빨라지는 버그 -> 1로 정규화 필요
 
+
 	FVector NewLocation = GetActorLocation() + Direction * MoveSpeed * DeltaTime;
 
 	SetActorLocation(NewLocation);
+
+	//UE_LOG(LogTemp, Warning, TEXT("DeltaTime : %f"), DeltaTime); // 수치가 비슷한 이유: 고정프레임이라 그런 거 같다?
 
 }
 
