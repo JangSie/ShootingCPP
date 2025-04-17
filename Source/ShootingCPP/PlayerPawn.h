@@ -4,8 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
-//#include "Components/BoxComponent.h"
+#include "InputActionValue.h"
 #include "PlayerPawn.generated.h"
+
+//#include "Components/BoxComponent.h"
 
 UCLASS()
 class SHOOTINGCPP_API APlayerPawn : public APawn
@@ -42,7 +44,23 @@ public:
 
 	// 메시 컴포넌트 
 	// 오브젝트에 그래픽 렌더링을 할 수 있게하는 기능 (표면 같은?
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(EditAnywhere)
 	class UStaticMeshComponent* MeshComp;
+	
+	// ------------------Inputs 연관 변수 선언------------------------
+	UPROPERTY(EditAnywhere)
+	class UInputMappingContext* IMC_PlayerInput;
+
+	UPROPERTY(EditAnywhere)
+	class UInputAction* IA_Horizontal;
+
+	UPROPERTY(EditAnywhere)
+	class UInputAction* IA_Vertical;
+
+private:
+	// 입력 이벤트 발생 시 실행할 함수
+	void OnInputHorizontal(const struct FInputActionValue& value); // struct형태/ FInputActionValue를 참조로 갖고옴
+	// 이 함수는 언리얼에서 지정해둠, class(전방선언) 사용 불가(=형식 유지 필요) => include 필요(InputActionValue.h)
+	void OnInputVertical(const struct FInputActionValue& value);
 
 };

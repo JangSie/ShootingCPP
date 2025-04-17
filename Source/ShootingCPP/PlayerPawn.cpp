@@ -4,6 +4,8 @@
 #include "PlayerPawn.h"
 #include "Components/BoxComponent.h"
 #include "Components/StaticMeshComponent.h"
+#include "EnhancedInputComponent.h"
+#include "EnhancedInputSubsystems.h"
 
 // Sets default values
 APlayerPawn::APlayerPawn()
@@ -35,6 +37,24 @@ APlayerPawn::APlayerPawn()
 void APlayerPawn::BeginPlay()
 {
 	Super::BeginPlay();
+
+	// Aplayer : 플레이어
+	APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
+	// GetWorld : 현재 켜져있는 월드 받아옴 
+	// => 재생 눌렀을 때 플레이어를 받아옴
+	
+	// 예외처리 = 값 들어있을 때 true
+	if (PlayerController)
+	{
+		UEnhancedInputLocalPlayerSubsystem* subSystem = 
+			ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer());
+
+		if (subSystem != nullptr)
+		{
+			// 입력 서브 시스템에 IMC파일 변수를 연결 (=플레이어와 연동)
+			subSystem->AddMappingContext(IMC_PlayerInput, 0);
+		}
+	}
 	
 }
 
@@ -50,5 +70,28 @@ void APlayerPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+	UEnhancedInputComponent* EnhancedInputComp = Cast<UEnhancedInputComponent>(PlayerInputComponent);
+
+	if (EnhancedInputComp)
+	{
+		// ( 뭘 동작할지, 어떻게 동작될지, this(플레이어 pawn), 이 액션에 어떤 함수를 넣을 것인지 )
+		EnhancedInputComp->BindAction(IA_Horizontal, ETriggerEvent::Triggered, this, &APlayerPawn::OnInputHorizontal); //Triggered : 더할 때 (+)
+		EnhancedInputComp->BindAction(IA_Horizontal, ETriggerEvent::Completed, this, &APlayerPawn::OnInputHorizontal); //Completed : 뺄 때 (-)
+		EnhancedInputComp->BindAction(IA_Vertical, ETriggerEvent::Triggered, this, &APlayerPawn::OnInputVertical); //Triggered : 더할 때 (+)
+		EnhancedInputComp->BindAction(IA_Vertical, ETriggerEvent::Completed, this, &APlayerPawn::OnInputVertical); //Completed : 뺄 때 (-)
+	}
+
+}
+
+void APlayerPawn::OnInputHorizontal(const FInputActionValue& value)
+{
+	float Horizontal = value.Get<float>(); //<float> : float 형으로 값을 받겠다는 소리
+	UE_LOG(LogTemp, Warning, TEXT("Horizontal : %f"), Horizontal);
+}
+
+void APlayerPawn::OnInputVertical(const FInputActionValue& value)
+{
+	float Vertical = value.Get<float>(); //<float> : float 형으로 값을 받겠다는 소리
+	UE_LOG(LogTemp, Warning, TEXT("Vertical : %f"), Vertical);
 }
 
