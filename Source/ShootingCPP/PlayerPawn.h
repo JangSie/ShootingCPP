@@ -60,6 +60,9 @@ public:
 	TSubclassOf<class ABullet> BulletFactory; // 언리얼에서 드래그 앤 드롭으로 할당 가능?
 
 	UPROPERTY(EditAnywhere)
+	class USoundBase* FireSound;
+
+	UPROPERTY(EditAnywhere)
 	class UInputMappingContext* IMC_PlayerInput;
 
 	UPROPERTY(EditAnywhere)

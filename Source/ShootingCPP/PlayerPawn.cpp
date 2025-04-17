@@ -8,6 +8,7 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "Bullet.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 APlayerPawn::APlayerPawn()
@@ -123,5 +124,10 @@ void APlayerPawn::Fire()
 	// FirePosition: 스폰될 포지션 
 	// - GetComponentLocation : fire의 (언리얼) 빨간색 위치를 가져옴
 	// - GetComponentRotation : 회전값(rotation) 가져옴 
+
+	// #include "Kismet/GameplayStatics.h" 선언
+	UGameplayStatics::PlaySound2D(GetWorld(), FireSound);
+
+
 }
 
