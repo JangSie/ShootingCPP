@@ -35,7 +35,7 @@ void ABullet::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	FVector NewLocation = GetActorLocation() + GetActorForwardVector() * MoveSpeed *DeltaTime;
+	FVector NewLocation = GetActorLocation() + (GetActorForwardVector() * MoveSpeed *DeltaTime);
 	// GetActorLocation : 월드 기준 내 location 좌표로 가져옴
 	// GetActorForwardVector : x 좌표의 방향 벡터 (= 바라보고 있는 방향) 
 
