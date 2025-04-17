@@ -18,6 +18,8 @@ APlayerPawn::APlayerPawn()
 	// TEXT(컴포넌트 이름)
 	SetRootComponent(BoxComp); // rootComponent 지정 
 	// #include "Components/BoxComponent.h" - 써주지 않으면 찾지 못함/ 헤더는 class로 찾았지면 여긴 include 해줘야함
+	BoxComp->SetBoxExtent(FVector(50.0f, 50.0f, 50.0f));
+	// 수기로 한 걸 스크립트에서 50, 50, 50으로 맞춰줄 수 있음(인자의 타입은 float)
 
 
 	// 컴포넌트 생성하지 않으면 공간만 생성되고 컴포넌트는 생성x
