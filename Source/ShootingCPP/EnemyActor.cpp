@@ -18,6 +18,14 @@ AEnemyActor::AEnemyActor()
 	SetRootComponent(BoxComp);
 	BoxComp->SetBoxExtent(FVector(50.0f, 50.0f, 50.0f));
 
+	
+	//-------------------Collision-------------------------
+	// Project Settings > Engine > Collision > Preset(프리셋) 이름과 제대로 맞아야함
+	BoxComp->SetCollisionProfileName(TEXT("Enemy"));
+	// 문자열로 비교하는 건 예민한 문제 -> Const로 선언하고 해두는게 안전함 
+	//-----------------------------------------------------
+
+
 	MeshComp = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh Component"));
 	MeshComp->SetupAttachment(BoxComp); // BoxComp에 자식으로 들어감
 

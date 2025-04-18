@@ -17,10 +17,12 @@ ABullet::ABullet()
 
 	BoxComp->SetWorldScale3D(FVector(0.75f, 0.25f, 1.0f));
 	
+	//-------------------Collision-------------------------
+	BoxComp->SetCollisionProfileName(TEXT("Bullet"));
+	//-----------------------------------------------------
+
 	MeshComp = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh Component"));
 	MeshComp->SetupAttachment(BoxComp); // BoxComp에 자식으로 들어감
-	
-
 }
 
 // Called when the game starts or when spawned

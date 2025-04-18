@@ -27,6 +27,24 @@ APlayerPawn::APlayerPawn()
 	// 수기로 한 걸 스크립트에서 50, 50, 50으로 맞춰줄 수 있음(인자의 타입은 float)
 
 
+	//-------------------Collision-------------------------
+	// 이 박스 컴포넌트의 오버랩 이벤트를 키겠다
+	BoxComp->SetGenerateOverlapEvents(true);
+
+	BoxComp->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+
+	// DefaultEngin.ini파일에 검색, 설정해둔 채널이 들어있는 걸 확인할 수 있다
+	BoxComp->SetCollisionObjectType(ECC_GameTraceChannel1);
+
+	BoxComp->SetCollisionResponseToAllChannels(ECR_Ignore);
+
+	// ECC_GameTraceChannel2 : "Enemy"
+	BoxComp->SetCollisionResponseToChannel(ECC_GameTraceChannel2, ECR_Overlap);
+
+
+	//-----------------------------------------------------
+
+
 	// 컴포넌트 생성하지 않으면 공간만 생성되고 컴포넌트는 생성x
 	MeshComp = CreateDefaultSubobject <UStaticMeshComponent>(TEXT("My Static Mesh"));
 	MeshComp->SetupAttachment(BoxComp);
