@@ -40,8 +40,6 @@ APlayerPawn::APlayerPawn()
 
 	// ECC_GameTraceChannel2 : "Enemy"
 	BoxComp->SetCollisionResponseToChannel(ECC_GameTraceChannel2, ECR_Overlap);
-
-
 	//-----------------------------------------------------
 
 

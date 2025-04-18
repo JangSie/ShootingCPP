@@ -36,6 +36,11 @@ public:
 	UPROPERTY(EditAnywhere)
 	float MoveSpeed = 800.0f;
 
+	//---------델리게이트---------
+	UFUNCTION() // 반드시 써줘야 델리게이트 사용 가능  /UPrimitiveComponent, OnComponentBeginOverlap,  맨 압줄에서 제거
+	void OnEnemyOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+
 private:
 	// 방향 벡터 변수
 	FVector Direction;

@@ -68,6 +68,9 @@ void AEnemyActor::BeginPlay()
 		Direction = GetActorForwardVector();
 	}
 
+	//---------델리게이트---------
+	BoxComp->OnComponentBeginOverlap.AddDynamic(this, &AEnemyActor::OnEnemyOverlap);
+
 }
 
 // Called every frame
@@ -79,5 +82,17 @@ void AEnemyActor::Tick(float DeltaTime)
 
 	SetActorLocation(NewLocation);
 	// 계산된 MoveSpeed *DeltaTime 만큼 이동 
+}
+
+void AEnemyActor::OnEnemyOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	APlayerPawn* Player = Cast<APlayerPawn>(OtherActor);
+
+	if (Player != nullptr)
+	{
+		Player->Destroy();
+	}
+
+	Destroy();
 }
 

@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -32,5 +32,13 @@ public:
 	UPROPERTY(EditAnywhere)
 	class UStaticMeshComponent* MeshComp;
 
+	//---------폭발 이펙트---------
+	UPROPERTY(EditAnywhere)
+	class UParticleSystem* ExplosionFX;
+
+
+	//---------델리게이트---------
+	UFUNCTION() // 반드시 써줘야 델리게이트 사용 가능  /UPrimitiveComponent, OnComponentBeginOverlap,  맨 압줄에서 제거
+	void OnBulletOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 };
