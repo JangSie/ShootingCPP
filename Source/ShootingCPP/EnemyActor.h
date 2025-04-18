@@ -43,6 +43,6 @@ public:
 
 private:
 	// 방향 벡터 변수
-	FVector Direction;
+	FVector Direction = FVector::ZeroVector; //::ZeroVector = FVector(0,0,0) = 초기화
 
 };

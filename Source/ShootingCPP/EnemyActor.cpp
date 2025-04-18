@@ -58,9 +58,14 @@ void AEnemyActor::BeginPlay()
 				// Direction = 플레이어의 좌표 - 나 자신 즉, 애너미의 좌표 
 				Direction = Player->GetActorLocation() - GetActorLocation();
 				Direction.Normalize();
+
 			}
 		}
-
+		// 플레이어 제거 시 자리 못 찾는 Enemy Actor 자리 찾아주기
+		if (Direction == FVector::ZeroVector) // 플레이어의 방향을 찾지 못했을 때 true
+		{
+			Direction = GetActorForwardVector();
+		}
 	}
 	else
 	{

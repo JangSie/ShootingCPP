@@ -6,6 +6,7 @@
 #include "Components/StaticMeshComponent.h"
 #include "EnemyActor.h"
 #include "Kismet/GameplayStatics.h"
+#include "ShootingGameModeBa.h"
 
 // Sets default values
 ABullet::ABullet()
@@ -67,8 +68,18 @@ void ABullet::OnBulletOverlap(UPrimitiveComponent* OverlappedComponent, AActor* 
 		// 충돌한 Enemy Actor 파괴
 		Enemy->Destroy();
 
+		// 폭발 이펙트 생성
 		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), 
 			ExplosionFX, GetActorLocation(), GetActorRotation());
+
+		// 파괴된 Enemy Actor 따라 점수(Score) 추가
+		AGameModeBase* CurrentMode = GetWorld()->GetAuthGameMode(); //현재 게임모드 가져옴
+		
+		AShootingGameModeBa* CurrentGameModeBase = Cast<AShootingGameModeBa>(CurrentMode);
+		if (CurrentGameModeBase != nullptr)
+		{
+			CurrentGameModeBase->AddScore(1);
+		}
 	}
 
 	// this 생략되어 있다

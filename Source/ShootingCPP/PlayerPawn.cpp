@@ -41,6 +41,9 @@ APlayerPawn::APlayerPawn()
 	// ECC_GameTraceChannel2 : "Enemy"
 	BoxComp->SetCollisionResponseToChannel(ECC_GameTraceChannel2, ECR_Overlap);
 	//-----------------------------------------------------
+	// WorldStatic에 대해 플레이어를 블록으로 바꿔줌
+	BoxComp->SetCollisionResponseToChannel(ECC_WorldStatic, ECR_Block);
+	//-----------------------------------------------------
 
 
 	// 컴포넌트 생성하지 않으면 공간만 생성되고 컴포넌트는 생성x
@@ -93,7 +96,8 @@ void APlayerPawn::Tick(float DeltaTime)
 
 	FVector NewLocation = GetActorLocation() + Direction * MoveSpeed * DeltaTime;
 
-	SetActorLocation(NewLocation);
+	SetActorLocation(NewLocation, true); //true : 움직이기 전에 block체크 후 block이라면 못가게 방지함
+	// => ,true 추가 하여 움직임에 제한
 
 	//UE_LOG(LogTemp, Warning, TEXT("DeltaTime : %f"), DeltaTime); // 수치가 비슷한 이유: 고정프레임이라 그런 거 같다?
 
