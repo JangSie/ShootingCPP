@@ -6,6 +6,7 @@
 #include "Components/StaticMeshComponent.h"
 #include "EngineUtils.h"
 #include "PlayerPawn.h"
+#include "ShootingGameModeBa.h"
 // 서치 안에 actor 포함되려고 PlayerPawn을 갖고 온다?
 
 // Sets default values
@@ -96,6 +97,17 @@ void AEnemyActor::OnEnemyOverlap(UPrimitiveComponent* OverlappedComponent, AActo
 	if (Player != nullptr)
 	{
 		Player->Destroy();
+
+		// 형식을 AGameModeBase로 가져옴
+		// 근데 AGameModeBase 타입에는 우리가 정의한
+		// ShowMenu 함수가 없다
+		AGameModeBase* CurrentGameMode = GetWorld()->GetAuthGameMode();
+		AShootingGameModeBa* ShootingGameMode = Cast<AShootingGameModeBa>(CurrentGameMode);
+		if (ShootingGameMode != nullptr)
+		{
+			// 메뉴 UI 생성 함수 호출
+			ShootingGameMode->ShowMenu();
+		}
 	}
 
 	Destroy();

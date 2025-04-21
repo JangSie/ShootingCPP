@@ -19,11 +19,16 @@ private:
 	// class로 찍어낸 객체가 들어간다
 	class UMainWidget* MainWidget;
 
+	class UMenuWidget* MenuWidget;
+
 public:
 	// UmainWidget 클래스와 UmainWidget을 상속받은 자식 클래스가 들어갈 수 있다
 	// class 형식이 들어간다
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<class UMainWidget> MainWidgetClass;
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<class UMenuWidget> MenuWidgetClass;
 
 private:
 	void PrintScore();
@@ -34,5 +39,5 @@ protected:
 
 public:
 	void AddScore(int32 Point);
-
+	void ShowMenu();
 };

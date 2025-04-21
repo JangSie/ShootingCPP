@@ -20,4 +20,15 @@ public:
 
 	UPROPERTY(EditAnywhere, meta = (BindWidget))
 	class UButton* ButtonQuit;
+
+protected:
+	virtual void NativeConstruct() override;
+	// 위젯 실행 시 Nativeconstruct() 실행 됨 / beginPlay 와 유사
+
+public:
+	UFUNCTION()
+	void Restatr();
+
+	UFUNCTION()
+	void Quit();
 };
